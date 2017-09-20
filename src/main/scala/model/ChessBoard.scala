@@ -1,3 +1,5 @@
+package model
+
 
 object ChessBoard {
   def apply(width:Int, height:Int) : ChessBoard = {
