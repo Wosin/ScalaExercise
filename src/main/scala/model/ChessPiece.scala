@@ -34,7 +34,7 @@ case object Rook extends ChessPiece {
 }
 
 case object Bishop extends ChessPiece {
-  
+
   override def isThreathening(fieldToCheck:ChessField, fieldToPutPiece:ChessField) =
     Math.abs(fieldToCheck.x - fieldToPutPiece.x) == Math.abs(fieldToCheck.y - fieldToPutPiece.y)
 
