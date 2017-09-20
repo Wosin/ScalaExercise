@@ -1,3 +1,5 @@
+package model
+
 
 sealed trait ChessPiece{
 
@@ -16,12 +18,12 @@ case object Queen extends ChessPiece {
 
 case object Rook extends ChessPiece {
 
-  override def sortingPriority = 3
+  override def sortingPriority = 2
 }
 
 case object Bishop extends ChessPiece {
 
-  override def sortingPriority = 2
+  override def sortingPriority = 3
 }
 
 case object Knight extends ChessPiece {
