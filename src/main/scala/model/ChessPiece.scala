@@ -1,10 +1,20 @@
 package model
 
+ sealed trait ChessPiece{
+   def sortingPriority: Int
+   def isThreathening(fieldToCheck:ChessField, fieldToPutPiece:ChessField): Boolean
+}
 
-sealed trait ChessPiece{
-
-  def sortingPriority: Int
-  def isThreathening(fieldToCheck:ChessField, fieldToPutPiece:ChessField): Boolean
+case object PiecesMatcher {
+  def pieceFromString(pieceString:String) : ChessPiece = {
+    pieceString match {
+      case "K" => King
+      case "Q" => Queen
+      case "N" => Knight
+      case "R" => Rook
+      case "B" => Bishop
+    }
+  }
 }
 
 case object King extends ChessPiece {
@@ -12,6 +22,7 @@ case object King extends ChessPiece {
   override def sortingPriority = 5
 
   override def toString: String = "K"
+
   override def isThreathening(fieldToCheck:ChessField, fieldToPutPiece:ChessField) =
     Math.abs(fieldToCheck.x - fieldToPutPiece.x) <= 1 && Math.abs(fieldToCheck.y - fieldToPutPiece.y) <= 1
 }
