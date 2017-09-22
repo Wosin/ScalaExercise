@@ -11,11 +11,14 @@ case object King extends ChessPiece {
 
   override def sortingPriority = 5
 
+  override def toString: String = "K"
   override def isThreathening(fieldToCheck:ChessField, fieldToPutPiece:ChessField) =
     Math.abs(fieldToCheck.x - fieldToPutPiece.x) <= 1 && Math.abs(fieldToCheck.y - fieldToPutPiece.y) <= 1
 }
 
 case object Queen extends ChessPiece {
+
+  override def toString: String = "Q"
 
   override def isThreathening(fieldToCheck:ChessField, fieldToPutPiece:ChessField) =
     fieldToCheck.x == fieldToPutPiece.x ||
@@ -27,6 +30,8 @@ case object Queen extends ChessPiece {
 
 case object Rook extends ChessPiece {
 
+  override def toString: String = "R"
+
   override def isThreathening(fieldToCheck:ChessField, fieldToPutPiece:ChessField) =
     fieldToCheck.x == fieldToPutPiece.x || fieldToCheck.y == fieldToPutPiece.y
 
@@ -35,6 +40,8 @@ case object Rook extends ChessPiece {
 
 case object Bishop extends ChessPiece {
 
+  override def toString: String = "B"
+
   override def isThreathening(fieldToCheck:ChessField, fieldToPutPiece:ChessField) =
     Math.abs(fieldToCheck.x - fieldToPutPiece.x) == Math.abs(fieldToCheck.y - fieldToPutPiece.y)
 
@@ -42,6 +49,8 @@ case object Bishop extends ChessPiece {
 }
 
 case object Knight extends ChessPiece {
+
+  override def toString: String = "N"
 
   override def isThreathening(fieldToCheck:ChessField, fieldToPutPiece:ChessField) =
     (fieldToCheck.x == fieldToPutPiece.x && fieldToCheck.y == fieldToPutPiece.y) ||
