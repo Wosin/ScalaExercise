@@ -5,9 +5,9 @@ package model
    def isThreathening(fieldToCheck:ChessField, fieldToPutPiece:ChessField): Boolean
 }
 
-case object PiecesMatcher {
+object PiecesMatcher {
   def pieceFromString(pieceString:String) : ChessPiece = {
-    pieceString match {
+    pieceString.toUpperCase match {
       case "K" => King
       case "Q" => Queen
       case "N" => Knight
