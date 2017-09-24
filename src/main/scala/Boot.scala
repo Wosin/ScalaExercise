@@ -16,17 +16,27 @@ object Boot extends App {
     val pieces = safeStringToPieces(scala.io.StdIn.readLine())
     println("Calculating...")
 
-    val t0 = System.nanoTime()
-    val result = SolutionFinder.findSolutionForGivenBoardSize(pieces, width, height)
-    val t1 = System.nanoTime()
+    val result = measureSolutionFindingTime(SolutionFinder.findSolutionForGivenBoardSize(pieces, width, height))
 
-    println("TIME TOOK:" + (t1 - t0) / 1000000000.0)
-    println("RESULTS", result.size)
-    result.take(10).foreach(println)
+    println("I have found " + result.size + " solutions.")
+    println("To print all solution input [Y]es. Notice that printing all solutions may take some time.")
+    val userPrintAnswer = safeStringToBoolean(scala.io.StdIn.readLine())
+
+    if(userPrintAnswer) {
+      result.foreach(println)
+    }
   }
 
   def safeStringToInt(numberString: String) = {
       Try(numberString.toInt).toOption
+  }
+
+  def safeStringToBoolean(booleanString: String) = {
+    booleanString.toUpperCase match {
+      case "YES" => true
+      case "Y" => true
+      case _ => false
+    }
   }
 
   def safeStringToPieces(piecesString: String): Option[Seq[ChessPiece]] = {
@@ -37,5 +47,14 @@ object Boot extends App {
         .toList
     }.toOption
   }
-  
+
+  def measureSolutionFindingTime[R](function: => R):R = {
+    val t0 = System.nanoTime()
+    val result = function
+    val t1 = System.nanoTime()
+    val totalRunningTime = (t1 - t0) / 1000000000.0
+    println("Finding all solutions took: "+ totalRunningTime + " seconds.")
+
+    result
+  }
 }
