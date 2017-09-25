@@ -7,10 +7,9 @@ class SolutionFinder
   import scala.annotation.tailrec
 
   object SolutionFinder {
-    def findSolutionForGivenBoardSize(piecesToPut: Option[Seq[ChessPiece]], width: Option[Int], height: Option[Int]) = {
-      val pieces = piecesToPut.getOrElse(Seq(King, King ,Queen, Queen, Bishop, Bishop, Knight))
-      val boardWithGivenSize = ChessBoard(width.getOrElse(7), height.getOrElse(7))
-      putAllPiecesOnFields(pieces.sortBy(_.sortingPriority), Set(boardWithGivenSize))
+    def findSolutionForGivenBoardSize(piecesToPut: Seq[ChessPiece], width:Int, height: Int) = {
+      val boardWithGivenSize = ChessBoard(width, height)
+      putAllPiecesOnFields(piecesToPut.sortBy(_.sortingPriority), Set(boardWithGivenSize))
     }
 
     @tailrec

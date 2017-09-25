@@ -1,17 +1,35 @@
 import casting.TypeCasting
 import solving.SolutionFinder
-
 import TypeCasting._
+import com.typesafe.config.{Config, ConfigFactory}
+import model.{ChessPiece, PiecesMatcher}
 object Boot extends App {
   override def main(args: Array[String]): Unit = {
+    val config = ConfigFactory.load()
     println("Hello! This application will calculate all possible positions for ChessPieces on ChessBoard ")
-    println("Please give the width size of the board(default width is 7) :")
-    val width = safeStringToInt(scala.io.StdIn.readLine())
-    println("Please give the height size of the board(default height is 7) :")
-    val height = safeStringToInt(scala.io.StdIn.readLine())
-    println("Please give the space separated letters for Chess pieces : [K]ing, [Q]ueen, [R]ook, K[N]ight, [B}ishop.")
-    val pieces = safeStringToPieces(scala.io.StdIn.readLine())
+    println("Please give the width size of the board or press enter to get value from config(default width is 7) :")
+
+    val widthOption = safeStringToInt(scala.io.StdIn.readLine())
+
+    println("Please give the height size of the board or press enter to get value from config(default height is 7) :")
+    val heightOption = safeStringToInt(scala.io.StdIn.readLine())
+
+    println("Please give the space separated letters for Chess pieces: [K]ing, [Q]ueen, [R]ook, K[N]ight, [B}ishop.")
+    println("Or press enter to get default value from config :")
+
+    val piecesOption = safeStringToPieces(scala.io.StdIn.readLine())
     println("Calculating...")
+
+    val width = widthOption.getOrElse(config.getInt("width"))
+    val height = heightOption.getOrElse(config.getInt("height"))
+    val pieces:Seq[ChessPiece] =
+      piecesOption.getOrElse(
+        config
+          .getString("pieces")
+          .split(" ")
+          .map(piece => PiecesMatcher.pieceFromString(piece))
+          .toList
+      )
 
     val result = measureSolutionFindingTime(SolutionFinder.findSolutionForGivenBoardSize(pieces, width, height))
 
