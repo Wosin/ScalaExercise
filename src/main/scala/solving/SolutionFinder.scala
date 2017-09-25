@@ -8,13 +8,13 @@ class SolutionFinder
 
   object SolutionFinder {
     def findSolutionForGivenBoardSize(piecesToPut: Option[Seq[ChessPiece]], width: Option[Int], height: Option[Int]) = {
-      val pieces = piecesToPut.getOrElse(Seq(King,King ,Queen, Queen, Bishop, Bishop, Knight))
+      val pieces = piecesToPut.getOrElse(Seq(King, King ,Queen, Queen, Bishop, Bishop, Knight))
       val boardWithGivenSize = ChessBoard(width.getOrElse(7), height.getOrElse(7))
       putAllPiecesOnFields(pieces.sortBy(_.sortingPriority), Set(boardWithGivenSize))
     }
 
     @tailrec
-    final def putAllPiecesOnFields(piecesLeftToPut: Seq[ChessPiece], precalculatedBoards: Set[ChessBoard]): Set[ChessBoard] = {
+    private final def putAllPiecesOnFields(piecesLeftToPut: Seq[ChessPiece], precalculatedBoards: Set[ChessBoard]): Set[ChessBoard] = {
       piecesLeftToPut match {
         case Nil => precalculatedBoards
         case piece :: tail => {
@@ -24,14 +24,14 @@ class SolutionFinder
       }
     }
 
-    def calculateAllPositionsForPiece(chessBoard: ChessBoard, piece: ChessPiece): Set[ChessBoard] =
+    private def calculateAllPositionsForPiece(chessBoard: ChessBoard, piece: ChessPiece): Set[ChessBoard] =
       for {
         field:ChessField <- chessBoard.freeFields
         precalculatedBoards <- findFieldForPiece(chessBoard, field, piece)
       } yield precalculatedBoards
 
 
-    def findFieldForPiece(currentBoard:ChessBoard, fieldToTake: ChessField, pieceToPut: ChessPiece): Option[ChessBoard] = {
+    private def findFieldForPiece(currentBoard:ChessBoard, fieldToTake: ChessField, pieceToPut: ChessPiece): Option[ChessBoard] = {
       val piecesOnFields = currentBoard.piecesOnFields
       val emptyFields = currentBoard.freeFields
       if(!piecesOnFields.keySet.exists(fieldToCheck => pieceToPut.isThreathening(fieldToCheck, fieldToTake))) {
