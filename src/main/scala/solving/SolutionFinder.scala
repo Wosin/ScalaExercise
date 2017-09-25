@@ -41,7 +41,8 @@ class SolutionFinder
             currentBoard.width,
             currentBoard.height,
             emptyFields.filterNot(fieldToCheck => pieceToPut.isThreathening(fieldToCheck,fieldToTake)),
-            piecesOnFields + pieceOnField)
+            piecesOnFields + pieceOnField
+          )
         )
       } else {
         None

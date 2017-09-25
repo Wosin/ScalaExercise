@@ -1,10 +1,7 @@
-import javax.management.MatchQueryExp
-
-import model._
+import casting.TypeCasting
 import solving.SolutionFinder
 
-import scala.util.Try
-
+import TypeCasting._
 object Boot extends App {
   override def main(args: Array[String]): Unit = {
     println("Hello! This application will calculate all possible positions for ChessPieces on ChessBoard ")
@@ -25,27 +22,6 @@ object Boot extends App {
     if(userPrintAnswer) {
       result.foreach(println)
     }
-  }
-
-  def safeStringToInt(numberString: String) = {
-      Try(numberString.toInt).toOption
-  }
-
-  def safeStringToBoolean(booleanString: String) = {
-    booleanString.toUpperCase match {
-      case "YES" => true
-      case "Y" => true
-      case _ => false
-    }
-  }
-
-  def safeStringToPieces(piecesString: String): Option[Seq[ChessPiece]] = {
-    Try {
-      piecesString
-        .split(" ")
-        .map(pieceLetter => PiecesMatcher.pieceFromString(pieceLetter))
-        .toList
-    }.toOption
   }
 
   def measureSolutionFindingTime[R](function: => R):R = {
